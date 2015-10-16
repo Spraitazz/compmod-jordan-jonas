@@ -9,6 +9,7 @@ public class Vector3DTester {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		
+        //get the first command-line argument as the file name
 		String fileName = args[0];
 		Scanner scanner = new Scanner(new File(fileName));
 		//first read two vectors and perform simple operations
@@ -27,13 +28,16 @@ public class Vector3DTester {
 		System.out.println("Sum: " + Vector3D.vectorAdd(v1, v2));
 		System.out.println("Dot product: " + Vector3D.vectorDot(v1, v2));
 		System.out.println("Cross product: " + Vector3D.vectorCross(v1, v2));
+        
+        //get the third vector and check the necessary identities
 		System.out.println(System.lineSeparator()+"Now checking vector identities");
 		
 		double x3 = scanner.nextDouble();
 		double y3 = scanner.nextDouble();
 		double z3 = scanner.nextDouble();
+        Vector3D v3 = new Vector3D(x3, y3, z3);
 		
-		Vector3D v3 = new Vector3D(x3, y3, z3);
+        //a cross b = - b cross a check		
 		Vector3D v4 = Vector3D.vectorCross(v1, v2);
 		Vector3D v5 = Vector3D.vectorCross(v2, v1);
 		v5.scalarMultiply(-1);
@@ -44,6 +48,7 @@ public class Vector3DTester {
 			System.out.println("Error with showing first property");
 		}
 		
+        //a cross (b + c) = a cross b + a cross c check
 		Vector3D v6 = Vector3D.vectorCross(v1, Vector3D.vectorAdd(v2, v3));
 		Vector3D v7 = Vector3D.vectorAdd(Vector3D.vectorCross(v1, v2),Vector3D.vectorCross(v1, v3));
 		
@@ -53,7 +58,9 @@ public class Vector3DTester {
 			System.out.println("Error with showing second property");
 		}
 		
+        //a cross (b cross c) = (a dot c)b - (a dot b)c check
 		Vector3D v8 = Vector3D.vectorCross(v1, Vector3D.vectorCross(v2, v3));	
+        //explicit copy so as not to change v1, v2 by scalar multiplication
 		Vector3D v2copy = new Vector3D(v2);
 		Vector3D v3copy = new Vector3D(v3);
 		v2copy.scalarMultiply(Vector3D.vectorDot(v1, v3));
