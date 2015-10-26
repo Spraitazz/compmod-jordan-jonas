@@ -4,10 +4,10 @@
  * with the capabilities to add, subtract, dot and cross two vectors, as well as
  * multiply and divide a vector by a scalar, copy a vector and get its magnitude
  * and magnitude squared
- * 
- * @author Jordan Margetts
+ *
  * @author Jonas Paulavicius
  * @author Louis Headley
+ *
  */
 public class Vector3D {
 	
