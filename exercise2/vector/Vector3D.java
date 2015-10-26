@@ -7,7 +7,7 @@
  * 
  * @author Jordan Margetts
  * @author Jonas Paulavicius
- *
+ * @author Louis Headley
  */
 public class Vector3D {
 	
