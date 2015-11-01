@@ -23,13 +23,14 @@ public class Particle3DEuler {
 		//force on particle due to mass
 		Vector3D force = Particle3D.graviForce(particle, mass);
 		
+		//characteristic time == time for one orbit?
 		int numstep = 10;
 		
 		double dt = 0.1;
-
+		
 		double t = 0;
 		
-		output.printf("%10.5f %10.5f\n %10.5f %10.5f\n", t, particlePos.getX(),particlePos.getY(),particlePos.getZ());
+		output.printf("%10.5f %s\n", t, particle);
 		
 		for (int i = 0; i < numstep; i++) {
 			
@@ -40,10 +41,8 @@ public class Particle3DEuler {
 			particle.jumpVelocity(dt, force);
 			
 			t = t + dt;
-
-		        Vector3D newParticlePos = particle.getPosition();
 			
-			output.printf("%10.5f %10.5f\n %10.5f %10.5f", t, newParticlePos.getX(), newParticlePos.getY(), newParticlePos.getZ());
+			output.printf("%10.5f %s\n", t, particle);
 			
 		}
 		

@@ -81,6 +81,7 @@ public class Particle3D {
 	}
 	
 	public void jumpVelocity(double dt, Vector3D force) {
+		//copy necessary as Vector3D force is passed by reference
 		Vector3D forceEffect = new Vector3D(force);
 		forceEffect.scalarMultiply(dt/mass);
 		velocity = Vector3D.vectorAdd(velocity, forceEffect);		
@@ -97,8 +98,8 @@ public class Particle3D {
 		copyVelocity.scalarMultiply(dt);
 		Vector3D forceEffect = new Vector3D(force);
 		forceEffect.scalarMultiply(dt*dt*0.5/mass);
-		velocity = Vector3D.vectorAdd(velocity, copyVelocity);
-		velocity = Vector3D.vectorAdd(velocity, forceEffect);
+		position = Vector3D.vectorAdd(position, copyVelocity);
+		position = Vector3D.vectorAdd(position, forceEffect);
 	}
 	
 	public static Vector3D relativeSeparation(Particle3D p1, Particle3D p2) {
@@ -109,14 +110,15 @@ public class Particle3D {
 	//force on particle 1 due to particle 2
 	public static Vector3D graviForce(Particle3D p1, Particle3D p2) {
 		Vector3D force = Particle3D.relativeSeparation(p2, p1);
-		force.scalarDivide(Math.pow(force.magnitude(), 3)*p1.getMass()*p2.getMass());
+		force.scalarDivide(Math.pow(force.magnitude(), 3));
+		force.scalarMultiply(p1.getMass()*p2.getMass());
 		return force;
 	}
 	
 	
 	//potential at particle p1 due to particle p2
 	public static double graviPotential(Particle3D p1, Particle3D p2) {
-		return -1 * p1.getMass() * p2.getMass() * Particle3D.relativeSeparation(p2, p1).magnitude();
+		return -1 * p1.getMass() * p2.getMass() / Particle3D.relativeSeparation(p2, p1).magnitude();
 	}
 	
 

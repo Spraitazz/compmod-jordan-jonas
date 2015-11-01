@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-public class Particle3DEuler {
+public class Particle3DVerlet {
 
 	public static void main(String[] args) throws IOException {
 		
@@ -20,7 +20,6 @@ public class Particle3DEuler {
 		Vector3D massVel = new Vector3D(0,0,0);
 		Particle3D mass = new Particle3D(massPos, massVel, 1, "fixed mass");
 		
-		//force on particle due to mass
 		Vector3D force = Particle3D.graviForce(particle, mass);
 		
 		int numstep = 10;
@@ -29,24 +28,35 @@ public class Particle3DEuler {
 		
 		double t = 0;
 		
-		output.printf("%10.5f %10.5f\n", t, particle);
+		output.printf("%10.5f %s\n", t, particle);
 		
 		for (int i = 0; i < numstep; i++) {
 			
-			particle.jumpPosition(dt);
+			//jump position according to the force and timestep
+			particle.jumpPosition(dt, force);
 			
-			force = Particle3D.graviForce(particle, mass);
+			//update force for new position
+			Vector3D forceNew = Particle3D.graviForce(particle, mass);
 			
-			particle.jumpVelocity(dt, force);
+			//get average of the two forces
+			
+			Vector3D averageForce = Vector3D.vectorAdd(force, forceNew);
+			averageForce.scalarDivide(2);
+			
+			//jump velocity by the average force
+			particle.jumpVelocity(dt, averageForce);
+			
+			//set the force to the force at the new position, copy to avoid referencing
+			force = new Vector3D(forceNew);
 			
 			t = t + dt;
 			
-			output.printf("%10.5f %10.5f\n", t, particle);
+			output.printf("%10.5f %s\n", t, particle);
 			
 		}
 		
-		output.close();		
-		
+		output.close();
+
 	}
 
 }
