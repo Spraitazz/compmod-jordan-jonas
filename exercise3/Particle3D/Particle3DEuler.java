@@ -1,6 +1,7 @@
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+//import java.io.FileWriter;
+//import java.io.IOException;
+//import java.io.PrintWriter;
+import java.io.*;
 
 
 public class Particle3DEuler {
@@ -8,7 +9,10 @@ public class Particle3DEuler {
 	public static void main(String[] args) throws IOException {
 		
 		String outFile = args[0];
-        PrintWriter output = new PrintWriter(new FileWriter(outFile));
+		PrintWriter output = new PrintWriter(new FileWriter(outFile));
+		// add printwriter for energy file
+
+		PrintWriter outputEnergy = new PrintWriter(new FileWriter("EulerEnergy.out"));
 		
 		final double G = 1;
 		
@@ -29,6 +33,8 @@ public class Particle3DEuler {
 		double dt = 0.1;
 		
 		double t = 0;
+
+	        double energy;					   
 		
 		output.printf("%10.5f %s\n", t, particle);
 		
@@ -43,10 +49,15 @@ public class Particle3DEuler {
 			t = t + dt;
 			
 			output.printf("%10.5f %s\n", t, particle);
+
+			energy= particle.kineticEnergy()+ Particle3D.graviPotential(particle, mass);
+
+			outputEnergy.printf("%10.5f %10.7f \n", t, energy);
 			
 		}
 		
-		output.close();		
+		output.close();
+		outputEnergy.close();
 		
 	}
 

@@ -8,7 +8,10 @@ public class Particle3DVerlet {
 	public static void main(String[] args) throws IOException {
 		
 		String outFile = args[0];
-        PrintWriter output = new PrintWriter(new FileWriter(outFile));
+		PrintWriter output = new PrintWriter(new FileWriter(outFile));
+	      	// add printwriter for energy file
+
+		PrintWriter outputEnergy = new PrintWriter(new FileWriter("VerletEnergy.out"));
 		
 		final double G = 1;
 		
@@ -27,8 +30,12 @@ public class Particle3DVerlet {
 		double dt = 0.1;
 		
 		double t = 0;
+
+		double energy;
 		
 		output.printf("%10.5f %s\n", t, particle);
+
+		
 		
 		for (int i = 0; i < numstep; i++) {
 			
@@ -52,10 +59,15 @@ public class Particle3DVerlet {
 			t = t + dt;
 			
 			output.printf("%10.5f %s\n", t, particle);
+
+			energy= particle.kineticEnergy()+ Particle3D.graviPotential(particle, mass);
+
+			outputEnergy.printf("%10.5f %10.7f \n", t, energy);
 			
 		}
 		
 		output.close();
+		outputEnergy.close();
 
 	}
 
