@@ -55,7 +55,7 @@ public class Particle3D {
 	}
 	
 	public String toString(){
-		return "<" + label+"> <"+position.getX()+"> <"+position.getY()+"> <"+position.getZ()+">";
+	    	return  label +" " + position.getX() +" "+ position.getY() + " " + position.getZ();
 	}
 	
 	//first position then velocity, expect all components to be input
