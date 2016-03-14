@@ -1,0 +1,9 @@
+Potential types:
+1) Basic
+2) Truncated
+3) Truncated + force shifted
+
+
+1) 20k steps, liquid, 200 atoms, energy conserved to nearly 4s.f., most variation ~0.06, ran in: 112s
+2) 20k steps, liquid, 200 atoms, energy conserved to 3s.f., most variation ~0.2, ~0.03 %, ran in: 59s
+3) 20k steps, liquid, 200 atoms, energy conserved to 3s.f., most variation ~
